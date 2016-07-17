@@ -21,11 +21,13 @@
         <ivy:retrieve />
     </target>
 
+    <!-- Compile -->
     <target name="compile" description="Compile source code to classes" depends="resolve">
         <echo message="Compling BlueJPackager..."/>
         <javac includeantruntime="false" classpath="." srcdir="${src.dir}" destdir="${build.dir}"/>
     </target>
 
+    <!-- Build Jar -->
     <target name="jar" description="Package the BlueJPackager class into a Jar" depends="compile">
         <echo message="Packaging BlueJPackager..."/>
         <jar manifest="${target.mf}" destfile="${target.jar}">
