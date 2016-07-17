@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="BlueJPackager" default="jar" basedir=".">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="BlueJPackager" default="jar" basedir=".">
     <description>BlueJPackager build file for Ant</description>
 
     <!-- Targets -->
@@ -16,7 +16,12 @@
         <property name="target.jar" location="${basedir}/${target.abs}.jar"/>
     </target>
 
-    <target name="compile" description="Compile source code to classes" depends="init">
+    <!-- Resolve dependencies with ivy -->
+    <target name="resolve" description="Retrive dependencies with ivy" depends="init">
+        <ivy:retrieve />
+    </target>
+
+    <target name="compile" description="Compile source code to classes" depends="resolve">
         <echo message="Compling BlueJPackager..."/>
         <javac includeantruntime="false" classpath="." srcdir="${src.dir}" destdir="${build.dir}"/>
     </target>
