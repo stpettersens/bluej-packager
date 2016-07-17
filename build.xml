@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="BlueJPackager" default="jar" basedir=".">
+    <description>BlueJPackager build file for Ant</description>
+
+    <!-- Targets -->
+    <target name="init">
+        <!-- Create build directory -->
+        <mkdir dir="ant_build"/>
+
+        <!-- Variables for paths and files -->
+        <property name="pkg.dir" location="${basedir}/src/io/stpettersen/bluejpackager"/>
+        <property name="src.dir" location="${basedir}/src"/>
+        <property name="build.dir" location="${basedir}/ant_build"/>
+        <property name="target.abs" value="BlueJPackager"/>
+        <property name="target.mf" location="${basedir}/Manifest.mf"/>
+        <property name="target.jar" location="${basedir}/${target.abs}.jar"/>
+    </target>
+
+    <target name="compile" description="Compile source code to classes" depends="init">
+        <echo message="Compling BlueJPackager..."/>
+        <javac includeantruntime="false" classpath="." srcdir="${src.dir}" destdir="${build.dir}"/>
+    </target>
+
+    <target name="jar" description="Package the BlueJPackager class into a Jar" depends="compile">
+        <echo message="Packaging BlueJPackager..."/>
+        <jar manifest="${target.mf}" destfile="${target.jar}">
+            <fileset dir="${build.dir}"/>
+        </jar>
+    </target>
+</project>
