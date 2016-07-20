@@ -14,6 +14,5 @@ public class BlueJPackager {
         CommandLineParser parser = new DefaultParser();
         // Create the command line options.
         Options options = new Options();
-        
     }
 }
