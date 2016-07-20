@@ -11,21 +11,34 @@
         <!-- Variables for paths and files -->
         <property name="pkg.dir" location="${basedir}/src/io/stpettersen/bluejpackager"/>
         <property name="src.dir" location="${basedir}/src"/>
+        <property name="lib.dir" location="${basedir}/lib"/>
         <property name="build.dir" location="${basedir}/ant_build"/>
+        <property name="dist.dir" location="${basedir}/dist"/>
+        <property name="commons-cli" location="${lib.dir}/commons-cli-1.3.1.jar"/>
         <property name="target.abs" value="BlueJPackager"/>
         <property name="target.mf" location="${basedir}/Manifest.mf"/>
         <property name="target.jar" location="${basedir}/${target.abs}.jar"/>
+
+        <!-- Add libraries used by project to classpath -->
+        <path id="project.cp">
+            <pathelement location="${commons-cli}"/>
+        </path>
     </target>
 
     <!-- Resolve dependencies with ivy -->
-    <target name="resolve" description="Retrive dependencies with ivy" depends="init">
+    <target name="resolve" description="Retrieve dependencies with ivy" depends="init">
         <ivy:retrieve />
+        <delete>
+            <fileset dir="lib" includes="*-javadoc.jar"/>
+            <fileset dir="lib" includes="*-sources.jar"/>
+        </delete>
     </target>
 
     <!-- Compile -->
     <target name="compile" description="Compile source code to classes" depends="resolve">
         <echo message="Compling BlueJPackager..."/>
-        <javac includeantruntime="false" classpath="." srcdir="${src.dir}" destdir="${build.dir}"/>
+        <javac includeantruntime="false" classpath="${toString:project.cp}"
+        srcdir="${src.dir}" destdir="${build.dir}"/>
     </target>
 
     <!-- Build Jar -->
